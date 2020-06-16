@@ -24,7 +24,12 @@ https:\/\/m\.9ji\.com\/ url script-request-header Manga.js
 QX or Surge MITM = manga.bilibili.com
 ~~~~~~~~~~~~~~~~
 */
-
+function helperGetCookieByName(cookie, name) {
+  var reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+  var arr = cookie.match(reg);
+  if (arr && arr.length >= 3) return arr[2];
+  else return null;
+}
 const $nobyda = nobyda();
 
 if ($nobyda.isRequest) {
@@ -43,7 +48,7 @@ function checkin() {
       Cookie: $nobyda.read("Golen_CookieJJ"),
       "Content-Type": "application/x-www-form-urlencoded",
       "User-Agent": `Mozilla/5.0 (iPhone; CPU iPhone OS 14 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;CtClient;7.6.0;iOS;14;iPhone 100`,
-      Authorization: helper.getCookieByName(
+      Authorization: helperGetCookieByName(
         $nobyda.read("Golen_CookieJJ"),
         "Authorization"
       ),
@@ -154,11 +159,3 @@ function nobyda() {
   };
   return { isRequest, isQuanX, isSurge, notify, write, read, post, end };
 }
-let helper = {
-  getCookieByName: (cookie, name) => {
-    var reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-    var arr = cookie.match(reg);
-    if (arr && arr.length >= 3) return arr[2];
-    else return null;
-  },
-};
