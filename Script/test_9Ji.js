@@ -36,16 +36,19 @@ if ($nobyda.isRequest) {
 }
 
 function checkin() {
-  const bilibili = {
+  const _9ji = {
     url: "https://m.9ji.com/web/api/vipClub/sign/v1",
     headers: {
       Cookie: $nobyda.read("Golen_CookieJJ"),
       "Content-Type": "application/x-www-form-urlencoded",
       "User-Agent": `Mozilla/5.0 (iPhone; CPU iPhone OS 14 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;CtClient;7.6.0;iOS;14;iPhone 100`,
-      Authorization: helper.getCookieByName("Golen_CookieJJ", "Authorization"),
+      Authorization: helper.getCookieByName(
+        $nobyda.read("Golen_CookieJJ"),
+        "Authorization"
+      ),
     },
   };
-  $nobyda.post(bilibili, function (error, response, data) {
+  $nobyda.post(_9ji, function (error, response, data) {
     if (!error) {
       var body = JSON.parse(response.body);
       console.log("九机网 success response : \n" + body["data"]);
