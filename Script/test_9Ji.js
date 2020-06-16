@@ -28,9 +28,11 @@ QX or Surge MITM = manga.bilibili.com
 const $nobyda = nobyda();
 
 if ($nobyda.isRequest) {
+  console.log("九机网 签到 : \n 执行获取Cookie方法");
   GetCookie();
   $nobyda.end();
 } else {
+  console.log("九机网 签到 : \n 执行签到方法");
   checkin();
   $nobyda.end();
 }
@@ -38,6 +40,7 @@ if ($nobyda.isRequest) {
 function checkin() {
   const _9ji = {
     url: "https://m.9ji.com/web/api/vipClub/sign/v1",
+    method: "POST",
     headers: {
       Cookie: $nobyda.read("Golen_CookieJJ"),
       "Content-Type": "application/x-www-form-urlencoded",
@@ -48,21 +51,47 @@ function checkin() {
       ),
     },
   };
-  $nobyda.post(_9ji, function (error, response, data) {
-    if (!error) {
-      var body = JSON.parse(response.body);
-      console.log("九机网 success response : \n" + body["data"]);
-      if (body["code"] == 0) {
-        $nobyda.notify(`九机网 - 签到成功🎉`, "", "");
-      } else if (body["code"] == 5000) {
-        $nobyda.notify(`九机网 - 今日已签到🎉`, "", "");
-      } else if (body["code"] == 1000) {
-        $nobyda.notify(`九机网 - 登录失效，需要重新获取Cookie`, "", "");
+  $task.fetch(_9ji).then(
+    (response) => {
+      try {
+        var body = JSON.parse(response.body);
+        if (body["code"] == 0) {
+          $nobyda.notify(`九机网 - 签到成功🎉`, "", "");
+        } else if (body["code"] == 5000) {
+          $nobyda.notify(`九机网 - 今日已签到🎉`, "", "");
+        } else if (body["code"] == 1000) {
+          $nobyda.notify(`九机网 - 登录失效，需要重新获取Cookie`, "", "");
+        } else {
+          config._9ji.data.notify = `[${config._9ji.name}] 未知的Code代码:${body["code"]}`;
+          $nobyda.notify(`九机网 - 未知的Code代码，详见日志`, "", "");
+          console.log(`九机网 - 未知的Code代码:${body["code"]}`);
+        }
+        console.log("九机网-签到脚本Api提示: \n" + body["msg"]);
+      } catch (e) {
+        $nobyda.notify(`九机网 - 脚本数据解析异常⚠️`, "", "");
+        console.log("九机网-签到脚本数据解析异常⚠️ : \n" + JSON.stringify(e));
       }
-    } else {
-      $nobyda.notify("九机网 - 签到接口请求失败", "", error);
+      finalNotify("_9ji");
+    },
+    (reason) => {
+      $nobyda.notify("九机网 - 签到接口请求失败", "", reason.error);
     }
-  });
+  );
+  //$nobyda.post(_9ji, function (error, response, data) {
+  //if (!error) {
+  //var body = JSON.parse(data);
+  //console.log("九机网 success response : \n" + body["data"]);
+  //if (body["code"] == 0) {
+  //$nobyda.notify(`九机网 - 签到成功🎉`, "", "");
+  // } else if (body["code"] == 5000) {
+  // $nobyda.notify(`九机网 - 今日已签到🎉`, "", "");
+  // } else if (body["code"] == 1000) {
+  // $nobyda.notify(`九机网 - 登录失效，需要重新获取Cookie`, "", "");
+  // }
+  // } else {
+  // $nobyda.notify("九机网 - 签到接口请求失败", "", error);
+  // }
+  //});
 }
 
 function GetCookie() {
