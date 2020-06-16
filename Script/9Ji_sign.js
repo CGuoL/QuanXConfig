@@ -1,27 +1,14 @@
 /*
-Bilibili Manga Daily Bonus
-About the author:
-If reproduced, indicate the source
-Telegram channel: @NobyDa
-Telegram bots: @NobyDa_bot
-Description :
-When Bilibili Manga app is opened, click "My", If notification gets cookie success, you can use the check in script. because script will automatically judgment whether the cookie is updated, so you dont need to disable it manually.
-script will be performed every day at 9 am. You can modify the execution time.
-~~~~~~~~~~~~~~~~
-Surge 4.0 :
-[Script]
-cron "0 9 * * *" script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Bilibili-DailyBonus/Manga.js
-# Get bilibili cookie.
-http-request https:\/\/manga\.bilibili\.com\/.*\.User\/GetWallet max-size=0,script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Bilibili-DailyBonus/Manga.js
+九机网自动签到
 ~~~~~~~~~~~~~~~~
 QX 1.0.5 :
 [task_local]
 0 9 * * * Manga.js
 [rewrite_local]
-# Get bilibili cookie. QX 1.0.5(188+):
-https:\/\/m\.9ji\.com\/ url script-request-header Manga.js
+# Get  cookie. QX 1.0.5(188+):
+https:\/\/m\.9ji\.com\/ url script-request-header 9ji_sign.js
 ~~~~~~~~~~~~~~~~
-QX or Surge MITM = manga.bilibili.com
+QX or Surge MITM = m.9ji.com
 ~~~~~~~~~~~~~~~~
 */
 function helperGetCookieByName(cookie, name) {
