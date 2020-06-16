@@ -28,11 +28,9 @@ QX or Surge MITM = manga.bilibili.com
 const $nobyda = nobyda();
 
 if ($nobyda.isRequest) {
-  console.log("九机网 签到 : \n 执行获取Cookie方法");
   GetCookie();
   $nobyda.end();
 } else {
-  console.log("九机网 签到 : \n 执行签到方法");
   checkin();
   $nobyda.end();
 }
@@ -51,6 +49,7 @@ function checkin() {
       ),
     },
   };
+  console.log(`123`);
   $task.fetch(_9ji).then(
     (response) => {
       try {
@@ -77,21 +76,6 @@ function checkin() {
       $nobyda.notify("九机网 - 签到接口请求失败", "", reason.error);
     }
   );
-  //$nobyda.post(_9ji, function (error, response, data) {
-  //if (!error) {
-  //var body = JSON.parse(data);
-  //console.log("九机网 success response : \n" + body["data"]);
-  //if (body["code"] == 0) {
-  //$nobyda.notify(`九机网 - 签到成功🎉`, "", "");
-  // } else if (body["code"] == 5000) {
-  // $nobyda.notify(`九机网 - 今日已签到🎉`, "", "");
-  // } else if (body["code"] == 1000) {
-  // $nobyda.notify(`九机网 - 登录失效，需要重新获取Cookie`, "", "");
-  // }
-  // } else {
-  // $nobyda.notify("九机网 - 签到接口请求失败", "", error);
-  // }
-  //});
 }
 
 function GetCookie() {
