@@ -54,7 +54,6 @@ function checkin() {
       ),
     },
   };
-  console.log(`123`);
   $task.fetch(_9ji).then(
     (response) => {
       try {
