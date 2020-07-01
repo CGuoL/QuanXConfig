@@ -3,7 +3,7 @@
 ~~~~~~~~~~~~~~~~
 QX 1.0.5 :
 [task_local]
-0 9 * * * Manga.js
+0 9 * * * https://raw.githubusercontent.com/CGuoL/QuanXConfig/master/Script/9Ji_sign.js
 [rewrite_local]
 # Get  cookie. QX 1.0.5(188+):
 https:\/\/m\.9ji\.com\/ url script-request-header 9ji_sign.js
