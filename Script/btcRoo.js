@@ -6,9 +6,9 @@ QX 1.0.5 :
 0 9 * * * https://raw.githubusercontent.com/CGuoL/QuanXConfig/master/Script/btcRoo.js
 [rewrite_local]
 # Get  cookie. QX 1.0.5(188+):
-https:\/\/btcroo\.com\/ url script-request-header btcRoo.js
+https?:\/\/btcroo\.zb\.0xhash\.cn\/ url script-request-header https://raw.githubusercontent.com/CGuoL/QuanXConfig/master/Script/btcRoo.js
 ~~~~~~~~~~~~~~~~
-QX or Surge MITM = btcroo.com
+QX or Surge MITM = btcroo.zb.0xhash.cn
 ~~~~~~~~~~~~~~~~
 */
 const $nobyda = nobyda();
