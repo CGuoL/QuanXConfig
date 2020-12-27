@@ -147,7 +147,7 @@ function nobyda() {
     if (isSurge) $httpClient.post(options, callback);
   };
   const end = () => {
-    if (isQuanX) isRequest ? $done({}) : "";
+    if (isQuanX) isRequest ? $.done() : "";
     if (isSurge) isRequest ? $done({}) : $done();
   };
   return { isRequest, isQuanX, isSurge, notify, write, read, post, end };
