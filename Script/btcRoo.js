@@ -64,11 +64,9 @@ function checkin() {
           console.log(`比特袋鼠 - 未知的Code代码:${body["code"]}`);
         }
         console.log(`比特袋鼠-签到脚本Api提示: \n${response.body}`);
-  $nobyda.end();
       } catch (e) {
         $nobyda.notify(`比特袋鼠 - 脚本数据解析异常⚠️`, "", "");
         console.log("比特袋鼠-签到脚本数据解析异常⚠️ : \n" + JSON.stringify(e));
-  $nobyda.end();
       }
     },
     (reason) => {
@@ -148,7 +146,7 @@ function nobyda() {
     if (isSurge) $httpClient.post(options, callback);
   };
   const end = () => {
-    if (isQuanX) isRequest ? $.done() : "";
+    if (isQuanX) isRequest ? $done() : "";
     if (isSurge) isRequest ? $done({}) : $done();
   };
   return { isRequest, isQuanX, isSurge, notify, write, read, post, end };
