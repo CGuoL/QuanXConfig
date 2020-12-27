@@ -63,7 +63,6 @@ function checkin() {
         } else {
           console.log(`比特袋鼠 - 未知的Code代码:${body["code"]}`);
           $nobyda.notify(`比特袋鼠 - 未知的Code代码，详见日志`, "", "");
-          $nobyda.end();
         }
         console.log(`比特袋鼠-签到脚本Api提示: \n${response.body}`);
         $nobyda.end();
@@ -151,7 +150,7 @@ function nobyda() {
     if (isSurge) $httpClient.post(options, callback);
   };
   const end = () => {
-    if (isQuanX) isRequest ? $done({}) : "";
+    if (isQuanX) return $done({});
     if (isSurge) isRequest ? $done({}) : $done();
   };
   return { isRequest, isQuanX, isSurge, notify, write, read, post, end };
