@@ -17,7 +17,6 @@ if ($nobyda.isRequest) {
   GetCookie();
 } else {
   checkin();
-  $nobyda.end();
 }
 
 function checkin() {
@@ -46,13 +45,15 @@ function checkin() {
       try {
         var body = JSON.parse(response.body);
         if (body["code"] == 0) {
-          if (body["data"]["show_sign_tip"])
+          if (body["data"]["show_sign_tip"]) {
             $nobyda.notify(
               `比特袋鼠 - 签到成功🎉`,
               "",
               `已签到${body["data"]["sign_days"]}天。`
             );
-          else $nobyda.notify(`比特袋鼠 - 今日已签过`, "", "");
+          } else {
+            $nobyda.notify(`比特袋鼠 - 今日已签过`, "", "");
+          }
         } else if (body["code"] == 1000) {
           $nobyda.notify(
             `比特袋鼠 - 登录信息失效，需要重新登录获取Token`,
@@ -60,17 +61,21 @@ function checkin() {
             ""
           );
         } else {
-          $nobyda.notify(`比特袋鼠 - 未知的Code代码，详见日志`, "", "");
           console.log(`比特袋鼠 - 未知的Code代码:${body["code"]}`);
+          $nobyda.notify(`比特袋鼠 - 未知的Code代码，详见日志`, "", "");
+          $nobyda.end();
         }
         console.log(`比特袋鼠-签到脚本Api提示: \n${response.body}`);
+        $nobyda.end();
       } catch (e) {
-        $nobyda.notify(`比特袋鼠 - 脚本数据解析异常⚠️`, "", "");
         console.log("比特袋鼠-签到脚本数据解析异常⚠️ : \n" + JSON.stringify(e));
+        $nobyda.notify(`比特袋鼠 - 脚本数据解析异常⚠️`, "", "");
+        $nobyda.end();
       }
     },
     (reason) => {
       $nobyda.notify("比特袋鼠 - 签到接口请求失败", "", reason.error);
+      $nobyda.end();
     }
   );
 }
@@ -146,7 +151,7 @@ function nobyda() {
     if (isSurge) $httpClient.post(options, callback);
   };
   const end = () => {
-    if (isQuanX) isRequest ? $done() : "";
+    if (isQuanX) isRequest ? $done({}) : "";
     if (isSurge) isRequest ? $done({}) : $done();
   };
   return { isRequest, isQuanX, isSurge, notify, write, read, post, end };
